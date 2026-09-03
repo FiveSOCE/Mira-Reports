@@ -1,6 +1,7 @@
 package gg.mira.reports;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -12,10 +13,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.Instant;
 import java.util.*;
 
 public final class MiraReportsPlugin extends JavaPlugin {
+    private static final String PREFIX = "&5&lMira &8>> &r";
     private ReportService service;
 
     @Override public void onEnable() {
@@ -38,16 +39,14 @@ public final class MiraReportsPlugin extends JavaPlugin {
     }
 
     private boolean report(CommandSender sender, String[] args) {
-        if (!(sender instanceof Player reporter)) { sender.sendMessage("§cPlayers only."); return true; }
-        if (args.length < 2) { sender.sendMessage("§cUsage: /report <player> <reason>"); return true; }
+        if (!(sender instanceof Player reporter)) { msg(sender, "&cPlayers only."); return true; }
+        if (args.length < 2) { msg(sender, "&cUsage: /report <player> <reason>"); return true; }
         OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
-        if (target.getUniqueId().equals(reporter.getUniqueId())) { sender.sendMessage("§cYou cannot report yourself."); return true; }
+        if (target.getUniqueId().equals(reporter.getUniqueId())) { msg(sender, "&cYou cannot report yourself."); return true; }
         String reason = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
         Report entry = service.create(reporter.getUniqueId(), reporter.getName(), target.getUniqueId(), target.getName(), reason);
-        reporter.sendMessage("§aReport submitted. §7ID: §f" + entry.id());
-        for (Player online : Bukkit.getOnlinePlayers()) {
-            if (online.hasPermission("mirareports.staff")) online.sendMessage("§8[§cReport§8] §f" + reporter.getName() + " §7reported §f" + safeName(target) + " §7for §f" + reason + " §8[" + entry.id() + "]");
-        }
+        msg(reporter, "&aReport submitted. &7ID: &f" + entry.id());
+        for (Player online : Bukkit.getOnlinePlayers()) if (online.hasPermission("mirareports.staff")) msg(online, "&8[&cReport&8] &f" + reporter.getName() + " &7reported &f" + safeName(target) + " &7for &f" + reason + " &8[" + entry.id() + "]");
         return true;
     }
 
@@ -56,24 +55,25 @@ public final class MiraReportsPlugin extends JavaPlugin {
         List<Report> open = service.openReports();
         int pages = Math.max(1, (open.size() + 7) / 8);
         page = Math.max(1, Math.min(page, pages));
-        sender.sendMessage("§6Open Reports §8(" + page + "/" + pages + ")");
+        msg(sender, "&6Open Reports &8(" + page + "/" + pages + ")");
         int from = (page - 1) * 8;
         for (int i = from; i < Math.min(open.size(), from + 8); i++) {
             Report r = open.get(i);
-            sender.sendMessage("§e" + r.id() + " §f" + r.targetName() + " §7by §f" + r.reporterName() + " §8- §7" + r.reason());
+            msg(sender, "&e" + r.id() + " &f" + r.targetName() + " &7by &f" + r.reporterName() + " &8- &7" + r.reason());
         }
-        if (open.isEmpty()) sender.sendMessage("§7No open reports.");
+        if (open.isEmpty()) msg(sender, "&7No open reports.");
         return true;
     }
 
     private boolean close(CommandSender sender, String[] args) {
-        if (args.length < 1) { sender.sendMessage("§cUsage: /reportclose <id> [resolution]"); return true; }
+        if (args.length < 1) { msg(sender, "&cUsage: /reportclose <id> [resolution]"); return true; }
         String resolution = args.length > 1 ? String.join(" ", Arrays.copyOfRange(args, 1, args.length)) : "Closed by staff";
-        if (!service.close(args[0], sender.getName(), resolution)) sender.sendMessage("§cOpen report not found.");
-        else sender.sendMessage("§aReport closed.");
+        if (!service.close(args[0], sender.getName(), resolution)) msg(sender, "&cOpen report not found.");
+        else msg(sender, "&aReport closed.");
         return true;
     }
 
+    private void msg(CommandSender sender, String raw) { sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PREFIX + raw)); }
     private static String safeName(OfflinePlayer player) { return player.getName() == null ? player.getUniqueId().toString() : player.getName(); }
     private static int parseInt(String s, int fallback) { try { return Integer.parseInt(s); } catch (NumberFormatException ex) { return fallback; } }
 
