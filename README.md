@@ -1,35 +1,33 @@
 # MiraReports
 
-Player reporting and staff report queue for Paper 1.21.11 / Java 21.
+MiraReports is the player-reporting and staff report-queue system for the Mira Paper server suite. It gives players a simple way to report others while preserving report IDs, status, staff resolution details and historical records.
 
-## Current release
+## Download
 
-**v0.1.0**
+[**Download MiraReports v0.1.0**](https://github.com/FiveSOCE/Mira-Reports/releases/download/v0.1.0/MiraReports-0.1.0.jar)
 
-Direct download:
-https://github.com/FiveSOCE/Mira-Reports/releases/download/v0.1.0/MiraReports-0.1.0.jar
+## Requirements / Dependencies
 
-All releases:
-https://github.com/FiveSOCE/Mira-Reports/releases
+- Paper 1.21.11
+- Java 21
 
-## Features
+## How MiraReports Works
 
-- Player-to-player reporting
-- Persistent report IDs and history
-- Staff notifications for new reports
-- Paginated open report queue
-- Close reports with staff resolution notes
-- OPEN/CLOSED lifecycle with closer and timestamp
-- Public Bukkit ServicesManager API
+A player report creates a persistent report record with a unique ID and `OPEN` state. Staff with report access are notified and can browse the open queue by page. When a report is handled, staff close it with an optional resolution note. The report remains in history with its closer, close timestamp and final resolution instead of being deleted.
+
+MiraReports also exposes a public Bukkit ServicesManager API so other Mira moderation tools can query report state.
 
 ## Commands
 
-- `/report <player> <reason>`
-- `/reports [page]`
-- `/reportclose <id> [resolution]`
+| Command | Permission | What it does |
+| --- | --- | --- |
+| `/report <player> <reason>` | `mirareports.report` | Creates a report against the selected player. |
+| `/reports [page]` | `mirareports.staff` | Shows the paginated staff report queue. |
+| `/reportclose <id> [resolution]` | `mirareports.staff` | Closes a report and optionally records the staff resolution. |
 
-## Build
+## Permissions
 
-`./gradlew build`
-
-Output: `build/libs/MiraReports-0.1.0.jar`
+| Permission | Default | What it does |
+| --- | --- | --- |
+| `mirareports.report` | Everyone | Allows players to submit reports. |
+| `mirareports.staff` | OP | Allows viewing and closing reports and receiving staff-facing report access. |
