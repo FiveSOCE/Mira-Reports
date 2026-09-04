@@ -1,17 +1,27 @@
 name: MiraReports
-version: 0.1.0
+version: 0.1.1
 main: gg.mira.reports.MiraReportsPlugin
 api-version: '1.21'
 author: FiveSOCE
+description: Persistent player reports and staff triage queue for the Mira ecosystem.
+depend: [MiraCore]
+softdepend: [MiraStaff, MiraPunishments]
 commands:
   report:
     description: Report a player
+    usage: /report <player> <reason>
     permission: mirareports.report
   reports:
-    description: View report queue
+    description: View and inspect the report queue
+    usage: /reports [page|info <id>|mine]
+    permission: mirareports.staff
+  reportclaim:
+    description: Claim an open report for handling
+    usage: /reportclaim <id>
     permission: mirareports.staff
   reportclose:
     description: Close a report
+    usage: /reportclose <id> [resolution]
     permission: mirareports.staff
 permissions:
   mirareports.report: {default: true}
