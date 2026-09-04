@@ -1,0 +1,6 @@
+report-cooldown-seconds: 60
+block-duplicate-open-report: true
+page-size: 8
+
+messages:
+  prefix: '&5&lMira &8>> &r'
