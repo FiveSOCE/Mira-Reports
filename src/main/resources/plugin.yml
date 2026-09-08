@@ -1,5 +1,5 @@
 name: MiraReports
-version: 0.1.1
+version: 0.1.2
 main: gg.mira.reports.MiraReportsPlugin
 api-version: '1.21'
 author: FiveSOCE
