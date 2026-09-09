@@ -4,7 +4,7 @@ MiraReports is the player-reporting and staff triage-queue system for the Mira P
 
 ## Download
 
-[**Download MiraReports v0.1.1**](https://github.com/FiveSOCE/Mira-Reports/releases/download/v0.1.1/MiraReports-0.1.1.jar)
+[**Download MiraReports v0.1.1**](https://github.com/FiveSOCE/Mira-Reports/releases/download/v0.1.2/MiraReports-0.1.2.jar)
 
 [View All Releases](https://github.com/FiveSOCE/Mira-Reports/releases)
 
