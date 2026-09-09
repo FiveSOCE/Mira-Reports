@@ -1,12 +1,14 @@
 # MiraReports
 
-MiraReports is the player-reporting and staff triage-queue system for the Mira Paper server suite. It gives players a simple report flow while preserving report IDs, assignment, staff resolution details and historical records.
-
 ## Download
 
-[**Download MiraReports v0.1.1**](https://github.com/FiveSOCE/Mira-Reports/releases/download/v0.1.2/MiraReports-0.1.2.jar)
+**Latest compatibility release: v0.1.2**
 
-[View All Releases](https://github.com/FiveSOCE/Mira-Reports/releases)
+[**Download MiraReports-0.1.2.jar**](https://github.com/FiveSOCE/Mira-Reports/releases/download/v0.1.2/MiraReports-0.1.2.jar)
+
+[View all releases](https://github.com/FiveSOCE/Mira-Reports/releases)
+
+MiraReports is the player-reporting and staff triage-queue system for the Mira Paper server suite. It gives players a simple report flow while preserving report IDs, assignment, staff resolution details and historical records.
 
 ## Requirements / Dependencies
 
